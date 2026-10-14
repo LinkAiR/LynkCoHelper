@@ -55,3 +55,5 @@ jobs:
         LYNKCO_RETRIES: ${{ vars.LYNKCO_RETRIES || '2' }}
       run: |
         python ./LynkCoHelper/lynkco_daily_tasks.py
+
+# fork deployment marker: workflow registration trigger
