@@ -15,7 +15,14 @@ on:
     # 每天 UTC 0:00（北京时间 8:00）执行，GitHub 调度有延迟（可能延后数分钟到
     # 数小时）。需要精确触发可用 iOS 快捷指令等定时调用 GitHub API 主动触发
     # （注意：API 路径中的 workflow 文件名需与本文件名保持一致）。
+    #
+    # 备用时段（fork 容错）：GitHub 对 fork 仓库的 schedule 触发默认 disarm，
+    # 且高负载时单一 cron 偶发被整体丢弃。这里补 3 个错峰时段，只要任一命中
+    # 即可完成当天签到；脚本自身按“当日是否已签到”幂等，重复触发无副作用。
     - cron: "0 0 * * *"
+    - cron: "30 1 * * *"
+    - cron: "0 3 * * *"
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 jobs:
